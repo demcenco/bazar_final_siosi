@@ -5,6 +5,6 @@ const db = new Pool({
 	port: 5432,
 	host: '192.168.1.64',
 	database: 'postgres',
-	password: 'example'
+	password: 'inacap'
 });
 export default db;
