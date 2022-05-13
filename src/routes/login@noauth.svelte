@@ -1,13 +1,24 @@
 <script>
-
+	import { session } from '$app/stores';
 	import { post } from '$lib/api';
-	let email = 'ostap';
+	import { goto } from '$app/navigation';
+	let username = 'ostap';
 	let password = '123123';
 	let errors = null;
 	async function submit(event) {
-		const response = await post(`auth/login`, { email, password });
+		const response = await post(`auth/login`, { username, password });
 		if (response.errors) {
 			errors = response.errors;
+		}
+
+		if (response.user) {
+			$session.user = response.user;
+			if (response.user.user_type == 2) {
+				goto('/seller');
+			}
+			if (response.user.user_type == 1) {
+				goto('/admin');
+			}
 		}
 	}
 </script>
@@ -22,14 +33,14 @@
 				<a href="/register" class="link link-secondary">Registrarse</a>
 			</span>
 		</div>
-        {#if errors}
-            {#each errors as item}
-                <div class="text-red-600">
-                    - {item}
-                </div>
-            {/each}
-             <!-- content here -->
-        {/if}
+		{#if errors}
+			{#each errors as item}
+				<div class="text-red-600">
+					- {item}
+				</div>
+			{/each}
+			<!-- content here -->
+		{/if}
 		<div class="pt-2">
 			<form on:submit|preventDefault={submit}>
 				<div class="form-control w-full ">
@@ -37,7 +48,7 @@
 					<label class="label">
 						<span class="label-text font-semibold">Nombre de usuario o correo</span>
 					</label>
-					<input bind:value={email} type="text" class="input input-bordered w-full " />
+					<input bind:value={username} type="text" class="input input-bordered w-full " />
 				</div>
 				<div class="form-control w-full ">
 					<!-- svelte-ignore a11y-label-has-associated-control -->
@@ -59,6 +70,13 @@
 				</div>
 				<button class="btn btn-accent btn-block rounded-full mt-2" type="submit">Ingresar</button>
 			</form>
+			<button
+				class="btn btn-accent btn-block rounded-full mt-2"
+				on:click={() => {
+					username = 'admin';
+					submit();
+				}}>Ingresar Admin</button
+			>
 		</div>
 	</div>
 </div>
