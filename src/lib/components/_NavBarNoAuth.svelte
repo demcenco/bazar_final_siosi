@@ -28,6 +28,7 @@
 	</div>
 	<div class="navbar-center">
 		<a href="/" class="btn btn-ghost normal-case text-xl">daisyUI</a>
+		<a href="/todo" class="btn btn-ghost normal-case text-xl">todo</a>
 	</div>
 	<div class="navbar-end space-x-2">
 		<a href="/login" class="btn "> Ingresar</a>

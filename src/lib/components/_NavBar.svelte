@@ -29,6 +29,8 @@
 	</div>
 	<div class="flex-none">
 		<ul class="menu menu-horizontal p-0" />
+		<a href="/todo" class="btn btn-ghost normal-case text-xl">todo</a>
+
 		<button on:click={logOut} class="btn btn-primary"> Salir </button>
 	</div>
 </div>
